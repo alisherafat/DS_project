@@ -37,7 +37,6 @@ class Infix:
         stack = Stack()
 
         output = []
-        temp = []
         for token in self.infix:
             if token in "abcdefghijklmnopqrstuvwxyz":
                 output.append(token)
@@ -46,18 +45,13 @@ class Infix:
             elif token == ')':
                 top_of_stack = stack.pop()
                 while top_of_stack != '(':
-                    temp.append(top_of_stack)
+                    output.append(top_of_stack)
                     top_of_stack = stack.pop()
-                output = temp + output
-                temp = []
             else:
                 while (not stack.is_empty()) and \
                         (precedence[stack.peek()] >= precedence[token]):
-                    temp.append(stack.pop())
-                output = temp + output
-                temp = []
+                    output.append(stack.pop())
                 stack.push(token)
         while not stack.is_empty():
-            temp.append(stack.pop())
-        output = temp + output
+            output.append(stack.pop())
         return ' '.join(output)
